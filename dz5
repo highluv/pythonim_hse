@@ -1,0 +1,40 @@
+from datetime import datetime
+
+print("Введите дату в одном из форматов:")
+print("1. The Moscow Times — Wednesday, October 2, 2002")
+print("2. The Guardian — Friday, 11.10.13")
+print("3. Daily News — Thursday, 18 August 1977")
+print("Введите 'q' для выхода.\n")
+
+while True:
+    user_input = input("Дата: ").strip()
+    if user_input.lower() in {"q", "quit", "exit"}:
+        print("Завершение программы.")
+        break
+
+    try:
+        # пробуем первый формат (The Moscow Times)
+        date_obj = datetime.strptime(user_input, "%A, %B %d, %Y") # Запятые не забываем :)
+        print("Распознан формат: The Moscow Times →", date_obj)
+        continue
+    except ValueError:
+        pass  # не подошёл формат — идём дальше
+
+    try:
+        # пробуем второй формат (The Guardian)
+        date_obj = datetime.strptime(user_input, "%A, %d.%m.%y")  # Запятые нид и точки нид :)
+        print("Распознан формат: The Guardian →", date_obj)
+        continue
+    except ValueError:
+        pass
+
+    try:
+        # пробуем третий формат (Daily News)
+        date_obj = datetime.strptime(user_input, "%A, %d %B %Y") # Запятая 1 штука :)
+        print("Распознан формат: Daily News →", date_obj)
+        continue
+    except ValueError:
+        pass
+
+    # если ни один не подошёл
+    print("Неверный формат. Попробуйте снова.\n")
